@@ -7,7 +7,7 @@ import * as dotenv from 'dotenv';
 import { Users } from './entities';
 
 // Modules
-import { UsersModule } from './modules';
+import { UsersModule, AuthModule } from './modules';
 
 dotenv.config();
 
@@ -16,6 +16,7 @@ const { TYPEORM_HOST, TYPEORM_USERNAME, TYPEORM_PASSWORD, TYPEORM_DATABASE } =  
 @Module({
   imports: [
     UsersModule,
+    AuthModule,
     GraphQLModule.forRoot({
       typePaths: ['./**/**/*.graphql'],
       installSubscriptionHandlers: true,
