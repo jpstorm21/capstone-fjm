@@ -5,8 +5,23 @@ export class Users extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string
 
-    @Column({ name: 'username', type: 'text', nullable: true })
-    username: string
+    @Column({ name: 'name', type: 'text', nullable: true })
+    name: string
+
+    @Column({ name: 'run', type: 'text', nullable: true })
+    run: string
+
+    @Column({ name: 'email', type: 'text', nullable: true })
+    email: string
+
+    @Column({ name: 'state', type: 'boolean', nullable: true })
+    state: boolean
+
+    @Column({ name: 'password_hash', type: 'text', nullable: true })
+    passwordHash: string
+
+    @Column({ name: 'password_salt', type: 'text', nullable: true })
+    passwordSalt: string
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: 'NOW' })
     createdAt: Date
@@ -14,6 +29,6 @@ export class Users extends BaseEntity {
     @UpdateDateColumn({ name: 'update_at', type: 'timestamp' })
     updatedAt: Date
 
-    @DeleteDateColumn({ name: 'delete_at', type: 'timestamp' })
-    deleteAt: Date
+    @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp' })
+    deletedAt: Date
 }
