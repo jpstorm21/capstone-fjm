@@ -4,7 +4,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 
 // entities
-import { Users, Products } from './entities';
+import { 
+  Users, 
+  SuperAdmins, 
+  Administratives,
+  Campus,
+  Countries,
+  Follow,
+  FollowStates,
+  MigrantPersons,
+  Records,
+  Relatives,
+  States
+} from './entities';
 
 // Modules
 import { UsersModule, AuthModule } from './modules';
@@ -31,7 +43,19 @@ const { TYPEORM_HOST, TYPEORM_USERNAME, TYPEORM_PASSWORD, TYPEORM_DATABASE, TYPE
       username: TYPEORM_USERNAME,
       password: TYPEORM_PASSWORD,
       database: TYPEORM_DATABASE,
-      entities: [Users, Products],
+      entities: [
+        Users, 
+        SuperAdmins,
+        Administratives,
+        Campus,
+        Countries,
+        Follow,
+        FollowStates,
+        MigrantPersons,
+        Records,
+        Relatives,
+        States
+      ],
       synchronize: TYPEORM_SYNCHRONIZE == "true" ? true : false,
       retryDelay: 3000,
       retryAttempts: 10,
