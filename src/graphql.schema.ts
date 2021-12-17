@@ -12,6 +12,10 @@ export class InputLogin {
     password: string;
 }
 
+export class CountryData {
+    name: string;
+}
+
 export class UserData {
     run: string;
     name: string;
@@ -21,6 +25,8 @@ export class UserData {
 
 export abstract class IMutation {
     abstract login(input?: InputLogin): LoginResponse | Promise<LoginResponse>;
+
+    abstract createCountry(input?: CountryData): Country | Promise<Country>;
 
     abstract createUser(input?: UserData): User | Promise<User>;
 
@@ -39,7 +45,17 @@ export class LoginResponse {
 }
 
 export abstract class IQuery {
+    abstract getCountries(): Country[] | Promise<Country[]>;
+
     abstract getUsers(): User[] | Promise<User[]>;
+}
+
+export class Country {
+    id: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date;
 }
 
 export class User {

@@ -4,7 +4,7 @@ import { UsersService } from './users.service';
 import { User, UserData } from 'src/graphql.schema';
 import { JwtAuthGuard } from 'src/security/guards/jwt-auth.guard';
 
-@UseGuards(JwtAuthGuard)
+/* @UseGuards(JwtAuthGuard) */
 @Resolver()
 export class UsersResolver {
     constructor(

@@ -19,7 +19,7 @@ import {
 } from './entities';
 
 // Modules
-import { UsersModule, AuthModule } from './modules';
+import { UsersModule, AuthModule, CountriesModule } from './modules';
 
 dotenv.config();
 
@@ -29,6 +29,7 @@ const { TYPEORM_HOST, TYPEORM_USERNAME, TYPEORM_PASSWORD, TYPEORM_DATABASE, TYPE
   imports: [
     UsersModule,
     AuthModule,
+    CountriesModule,
     GraphQLModule.forRoot({
       typePaths: ['./**/**/*.graphql'],
       installSubscriptionHandlers: true,
