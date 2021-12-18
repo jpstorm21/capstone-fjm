@@ -12,6 +12,10 @@ export class InputLogin {
     password: string;
 }
 
+export class VenueData {
+    name: string;
+}
+
 export class CountryData {
     name: string;
 }
@@ -25,6 +29,8 @@ export class UserData {
 
 export abstract class IMutation {
     abstract login(input?: InputLogin): LoginResponse | Promise<LoginResponse>;
+
+    abstract createVenue(input?: VenueData): Venue | Promise<Venue>;
 
     abstract createCountry(input?: CountryData): Country | Promise<Country>;
 
@@ -45,9 +51,19 @@ export class LoginResponse {
 }
 
 export abstract class IQuery {
+    abstract getCampus(): Venue[] | Promise<Venue[]>;
+
     abstract getCountries(): Country[] | Promise<Country[]>;
 
     abstract getUsers(): User[] | Promise<User[]>;
+}
+
+export class Venue {
+    id: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date;
 }
 
 export class Country {

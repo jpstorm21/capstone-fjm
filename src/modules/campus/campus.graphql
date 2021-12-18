@@ -1,0 +1,21 @@
+scalar Date
+
+type Query {
+  getCampus: [Venue]
+}
+
+type Mutation {
+  createVenue(input: VenueData): Venue
+}
+
+type Venue {
+  id: ID!
+  name: String!
+  createdAt: Date!
+  updatedAt: Date!
+  deletedAt: Date!
+}
+
+input VenueData {
+  name: String!
+}
