@@ -1,0 +1,75 @@
+scalar Date
+
+type Query {
+  getMigrantsPersons: [MigrantPerson]
+}
+
+type Mutation {
+  createMigrantPerson(input: MigrantPersonData): MigrantPerson
+  editMigrantPerson(id: ID, input: MigrantPersonData): MigrantPerson
+  deleteMigrantPerson(id: ID): MigrantPerson
+}
+
+type MigrantPerson {
+  id: ID!
+  name: String!
+  run: String!
+  dni: String!
+  passport: String!
+  other: String!
+  age: Int!
+  sex: String!
+  levelStudy: String!
+  civilStatus: String!
+  birthDate: Date!
+  admissionDate: Date!
+  phone: String!
+  email: String!
+  address: String!
+  visa: String!
+  visaState: String!
+  currentOccupation: String!
+  profession: String!
+  networksDescription: String!
+  derivationDescription: String!
+  chileanTies: String!
+  residentTies: String!
+  reasonConsultation: String!
+  jobPlacement: String!
+  typeIncome: String!
+  studyValidationProcess: String!
+  occupationCountryOrigen: String!
+  createdAt: Date!
+  updatedAt: Date!
+  deletedAt: Date!
+}
+
+input MigrantPersonData {
+  name: String!
+  run: String!
+  dni: String!
+  passport: String!
+  other: String!
+  age: Int!
+  sex: String!
+  levelStudy: String!
+  civilStatus: String!
+  birthDate: Date!
+  admissionDate: Date!
+  phone: String!
+  email: String!
+  address: String!
+  visa: String!
+  visaState: String!
+  currentOccupation: String!
+  profession: String!
+  networksDescription: String!
+  derivationDescription: String!
+  chileanTies: String!
+  residentTies: String!
+  reasonConsultation: String!
+  jobPlacement: String!
+  typeIncome: String!
+  studyValidationProcess: String!
+  occupationCountryOrigen: String!
+}

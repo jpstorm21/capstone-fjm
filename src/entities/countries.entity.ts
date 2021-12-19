@@ -9,8 +9,8 @@ export class Countries extends BaseEntity {
     @Column({ name: 'name', type: 'text', nullable: true })
     name: string
 
-    @OneToMany(() => MigrantPersons, (migrantPerson) => migrantPerson.country)
-    migrantPerson: MigrantPersons[]
+    /* @OneToMany(() => MigrantPersons, (migrantPerson) => migrantPerson.country)
+    migrantPerson: MigrantPersons[] */
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: 'NOW' })
     createdAt: Date

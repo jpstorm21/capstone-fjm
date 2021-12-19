@@ -12,10 +12,13 @@ export class MigrantPersons extends BaseEntity {
     name: string
 
     @Column({ name: 'age', type: 'integer', nullable: true })
-    age: Number
+    age: number
 
     @Column({ name: 'run', type: 'text'})
     run: string
+
+    @Column({ name: 'other', type: 'text'})
+    other: string
 
     @Column({ name: 'level_study', type: 'text'})
     levelStudy: string
@@ -50,6 +53,9 @@ export class MigrantPersons extends BaseEntity {
     @Column({ name: 'visa', type: 'text' })
     visa: string
 
+    @Column({ name: 'visa_state', type: 'text' })
+    visaState: string
+
     @Column({ name: 'current_occupation', type: 'text' })
     currentOccupation: string
 
@@ -65,6 +71,12 @@ export class MigrantPersons extends BaseEntity {
     @Column({ name: 'chilean_ties', type: 'text' })
     chileanTies: string
 
+    @Column({ name: 'resident_ties', type: 'text' })
+    residentTies: string
+
+    @Column({ name: 'reason_consultation', type: 'text' })
+    reasonConsultation: string
+
     @Column({ name: 'job_placement', type: 'text' })
     jobPlacement: string
 
@@ -77,10 +89,10 @@ export class MigrantPersons extends BaseEntity {
     @Column({ name: 'occupation_country_origen', type: 'text' })
     occupationCountryOrigen: string
 
-    @Column({ name: 'id_country', type: 'uuid' })
+    /* @Column({ name: 'id_country', type: 'uuid' })
     @JoinColumn({ name: 'id_country' })
     @ManyToOne(() => Countries)
-    country: Countries;
+    country: Countries; */
 
     @OneToMany(() => Records, (records) => records.migrantPerson)
     records: Records[]

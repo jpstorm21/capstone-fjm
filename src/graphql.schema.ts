@@ -20,6 +20,36 @@ export class CountryData {
     name: string;
 }
 
+export class MigrantPersonData {
+    name: string;
+    run: string;
+    dni: string;
+    passport: string;
+    other: string;
+    age: number;
+    sex: string;
+    levelStudy: string;
+    civilStatus: string;
+    birthDate: Date;
+    admissionDate: Date;
+    phone: string;
+    email: string;
+    address: string;
+    visa: string;
+    visaState: string;
+    currentOccupation: string;
+    profession: string;
+    networksDescription: string;
+    derivationDescription: string;
+    chileanTies: string;
+    residentTies: string;
+    reasonConsultation: string;
+    jobPlacement: string;
+    typeIncome: string;
+    studyValidationProcess: string;
+    occupationCountryOrigen: string;
+}
+
 export class UserData {
     run: string;
     name: string;
@@ -33,6 +63,12 @@ export abstract class IMutation {
     abstract createVenue(input?: VenueData): Venue | Promise<Venue>;
 
     abstract createCountry(input?: CountryData): Country | Promise<Country>;
+
+    abstract createMigrantPerson(input?: MigrantPersonData): MigrantPerson | Promise<MigrantPerson>;
+
+    abstract editMigrantPerson(id?: string, input?: MigrantPersonData): MigrantPerson | Promise<MigrantPerson>;
+
+    abstract deleteMigrantPerson(id?: string): MigrantPerson | Promise<MigrantPerson>;
 
     abstract createUser(input?: UserData): User | Promise<User>;
 
@@ -55,6 +91,8 @@ export abstract class IQuery {
 
     abstract getCountries(): Country[] | Promise<Country[]>;
 
+    abstract getMigrantsPersons(): MigrantPerson[] | Promise<MigrantPerson[]>;
+
     abstract getUsers(): User[] | Promise<User[]>;
 }
 
@@ -69,6 +107,40 @@ export class Venue {
 export class Country {
     id: string;
     name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date;
+}
+
+export class MigrantPerson {
+    id: string;
+    name: string;
+    run: string;
+    dni: string;
+    passport: string;
+    other: string;
+    age: number;
+    sex: string;
+    levelStudy: string;
+    civilStatus: string;
+    birthDate: Date;
+    admissionDate: Date;
+    phone: string;
+    email: string;
+    address: string;
+    visa: string;
+    visaState: string;
+    currentOccupation: string;
+    profession: string;
+    networksDescription: string;
+    derivationDescription: string;
+    chileanTies: string;
+    residentTies: string;
+    reasonConsultation: string;
+    jobPlacement: string;
+    typeIncome: string;
+    studyValidationProcess: string;
+    occupationCountryOrigen: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;
