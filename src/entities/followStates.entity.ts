@@ -17,6 +17,9 @@ export class FollowStates extends BaseEntity {
     @Column({ name: 'date', type: 'date' })
     date: Date
 
+    @Column({ name: 'comments', type: 'text' })
+    comments: string
+
     @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: 'NOW' })
     createdAt: Date
 

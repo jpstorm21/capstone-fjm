@@ -20,6 +20,10 @@ export class CountryData {
     name: string;
 }
 
+export class FollowData {
+    type: string;
+}
+
 export class MigrantPersonData {
     name: string;
     run: string;
@@ -64,6 +68,8 @@ export abstract class IMutation {
 
     abstract createCountry(input?: CountryData): Country | Promise<Country>;
 
+    abstract createFollow(input?: FollowData): Follo | Promise<Follo>;
+
     abstract createMigrantPerson(input?: MigrantPersonData): MigrantPerson | Promise<MigrantPerson>;
 
     abstract editMigrantPerson(id?: string, input?: MigrantPersonData): MigrantPerson | Promise<MigrantPerson>;
@@ -91,6 +97,8 @@ export abstract class IQuery {
 
     abstract getCountries(): Country[] | Promise<Country[]>;
 
+    abstract getFollows(): Follo[] | Promise<Follo[]>;
+
     abstract getMigrantsPersons(): MigrantPerson[] | Promise<MigrantPerson[]>;
 
     abstract getUsers(): User[] | Promise<User[]>;
@@ -112,6 +120,14 @@ export class Country {
     deletedAt: Date;
 }
 
+export class Follo {
+    id: string;
+    type: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date;
+}
+
 export class MigrantPerson {
     id: string;
     name: string;
@@ -123,8 +139,8 @@ export class MigrantPerson {
     sex: string;
     levelStudy: string;
     civilStatus: string;
-    birthDate: Date;
-    admissionDate: Date;
+    birthDate?: Date;
+    admissionDate?: Date;
     phone: string;
     email: string;
     address: string;
