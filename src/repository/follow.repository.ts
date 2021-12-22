@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Follo, FollowData } from 'src/graphql.schema';
 import { Repository, EntityRepository } from 'typeorm';
 import { Follow } from './../entities/follow.entity';
+import { MigrantPersons } from './../entities/migrantPersons.entity';
 
 
 @Injectable()
@@ -10,6 +11,7 @@ export class FollowsRepository extends Repository<Follow> {
     public async getFollows(): Promise<Follo[]> {
         try {
             return await this.find({
+                relations: ['migrant'],
                 where: { deletedAt: null }
             });
         } catch (error) {
@@ -17,12 +19,13 @@ export class FollowsRepository extends Repository<Follow> {
         }
     }
 
-    public async insertFollow(followData: FollowData): Promise<Follo> {
+    public async insertFollow(followData: FollowData, migrantPerson: MigrantPersons ): Promise<Follo> {
         try {
             const { type } = followData;           
 
             const follow = new Follow();
-            follow.type = type;            
+            follow.type = type;  
+            follow.migrant = migrantPerson;          
 
             return await follow.save();
         } catch (error) {

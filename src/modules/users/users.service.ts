@@ -1,14 +1,18 @@
 import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User, UserData } from 'src/graphql.schema';
+import { Administrative, User, UserData } from 'src/graphql.schema';
 import { UsersRepository } from '../../repository/users.repository';
+import { CampusRepository } from 'src/repository/campus.repository';
+import { UsersAdministrativeRepository } from 'src/repository/administrative.repository';
 
 @Injectable()
 export class UsersService {
     private logger: Logger = new Logger(UsersService.name);
 
     constructor(
-        @InjectRepository(UsersRepository) private usersRepository: UsersRepository
+        @InjectRepository(UsersRepository) private usersRepository: UsersRepository,
+        @InjectRepository(CampusRepository) private campusRepository: CampusRepository,
+        @InjectRepository(UsersAdministrativeRepository) private usersAdministrativeRepository: UsersAdministrativeRepository,
     ) {}
 
     async getUsers(): Promise<User[]> {
@@ -19,11 +23,19 @@ export class UsersService {
             throw error;
         }
     }
+    async getAdministratives(): Promise<Administrative[]> {
+        try {
+            this.logger.debug('Getting Users Administrative');
+            return await this.usersAdministrativeRepository.getUsersAdministratives();
+        } catch (error) {
+            throw error;
+        }
+    }
 
     async createUser(userData: UserData): Promise<User> {
         try {
             this.logger.debug(`creating user=${JSON.stringify(userData)}`);
-            const { name, run, password, email } = userData;
+            const { name, run, password, email, campus } = userData;
 
             if (!name) {
                 throw new HttpException(
@@ -52,6 +64,12 @@ export class UsersService {
                     HttpStatus.BAD_REQUEST,
                 );
             }
+            if (!campus) {
+                throw new HttpException(
+                    'Param campus is undefined',
+                    HttpStatus.BAD_REQUEST,
+                );
+            }
 
             const userByRut = await this.usersRepository.getUserByRut(run);
 
@@ -70,8 +88,12 @@ export class UsersService {
                     HttpStatus.BAD_REQUEST,
                 );
             }
-            console.log(userData)
-            return await this.usersRepository.insertUser(userData);
+
+            const campusById = await this.campusRepository.findOne({
+                where: {id: campus, deletedAt: null}
+            });            
+            
+            return await this.usersRepository.insertUser(userData, campusById);
         } catch (error) {
             throw error;
         }
@@ -136,7 +158,7 @@ export class UsersService {
     async editUser(id: string, userData: UserData): Promise<User> {
         try {
             this.logger.debug(`updating user with data=${JSON.stringify(userData)}`);
-            const { name, run, email, } = userData;
+            const { name, run, email, campus } = userData;
 
             if (!id) {
                 throw new HttpException(
@@ -165,6 +187,12 @@ export class UsersService {
                     HttpStatus.BAD_REQUEST,
                 );
             }
+            if (!campus) {
+                throw new HttpException(
+                    'Param campus is undefined',
+                    HttpStatus.BAD_REQUEST,
+                );
+            }
 
             const userById = await this.usersRepository.getUserById(id);
 
@@ -177,10 +205,17 @@ export class UsersService {
 
             const userByRut = await this.usersRepository.getUserByRut(run);
             const userByEmail = await this.usersRepository.getUserByEmail(email);
+            const administrativeById = await this.usersAdministrativeRepository.findOne({
+                where: { user: id, deletedAt: null }
+            });
+
+            const campusById = await this.campusRepository.findOne({
+                where: { id: campus, deletedAt: null}
+            })
 
             if (userByEmail && userByRut) {
                 if (userById.id === userByEmail.id && userByRut.id === userById.id) {
-                    return await this.usersRepository.editUser(userById, userData);
+                    return await this.usersRepository.editUser(userById,campusById, userData, administrativeById);
                 }
             }
 
@@ -194,7 +229,7 @@ export class UsersService {
             }
 
             if (userByEmail && userById.id === userByEmail.id && !userByRut) {
-                return await this.usersRepository.editUser(userById, userData);
+                return await this.usersRepository.editUser(userById,campusById, userData, administrativeById);
             }
 
             if (userByEmail && userById.id !== userByEmail.id && !userByRut) {
@@ -205,7 +240,7 @@ export class UsersService {
             }
 
             if (userByRut && userById.id === userByRut.id && !userByEmail) {
-                return await this.usersRepository.editUser(userById, userData);
+                return await this.usersRepository.editUser(userById,campusById, userData, administrativeById);
             }
 
             if (userByRut && userById.id !== userByRut.id && !userByEmail) {
@@ -234,7 +269,7 @@ export class UsersService {
             }
 
             if (!userByEmail && !userByRut) {
-                return await this.usersRepository.editUser(userById, userData);
+                return await this.usersRepository.editUser(userById,campusById, userData, administrativeById);
             }
 
         } catch (error) {

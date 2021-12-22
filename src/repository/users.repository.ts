@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { User, UserData } from 'src/graphql.schema';
+import { Administrative, User, UserData, Venue } from 'src/graphql.schema';
 import { Repository, EntityRepository } from 'typeorm';
 import { Users } from '../entities/users.entity';
 import { encryptPassword } from '../utils/bcrypt';
+import { Administratives } from '../entities/administratives.entity';
+import { Campus } from 'src/entities';
+
 
 @Injectable()
 @EntityRepository(Users)
@@ -17,7 +20,7 @@ export class UsersRepository extends Repository<Users> {
         }
     }
 
-    public async insertUser(userData: UserData): Promise<User> {
+    public async insertUser(userData: UserData, campus: Campus): Promise<User> {
         try {
             const { name, run, password, email } = userData;
             const [passwordHash, passworSalt] = await encryptPassword(password);
@@ -28,9 +31,15 @@ export class UsersRepository extends Repository<Users> {
             user.run = run;
             user.passwordHash = passwordHash;
             user.passwordSalt = passworSalt;
-            user.state = false;
-
-            return await user.save();
+            user.state = true;
+            
+            const userToInsert = await user.save();
+            const administrative = new Administratives();
+            administrative.campus = campus;
+            administrative.user = user;
+            const administrativeToInsert = await administrative.save();
+            
+            return userToInsert;
         } catch (error) {
             throw error;
         }
@@ -86,14 +95,17 @@ export class UsersRepository extends Repository<Users> {
         return await this.save(user);
     }
 
-    public async editUser(user: User, userData: UserData): Promise<User> {
+    public async editUser(user: User, campus: Campus, userData: UserData, administrative: Administratives): Promise<User> {
         const { name, run, email } = userData;
 
         user.name = name;
         user.email = email;
         user.run = run;
+        administrative.campus = campus;
 
-        return await this.save(user);
+        const userToId = await this.save(user);
+        await administrative.save();
+        return userToId;
     }
 
     public async changePassword(user: Users, password: string): Promise<Users> {

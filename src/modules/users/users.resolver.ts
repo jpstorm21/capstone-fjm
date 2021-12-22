@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UsersService } from './users.service';
-import { User, UserData } from 'src/graphql.schema';
+import { Administrative, User, UserData } from 'src/graphql.schema';
 import { JwtAuthGuard } from 'src/security/guards/jwt-auth.guard';
 
 /* @UseGuards(JwtAuthGuard) */
@@ -14,6 +14,11 @@ export class UsersResolver {
     @Query('getUsers')
     async getUsers(): Promise<User[]> {
         return await this.usersService.getUsers();
+    }
+
+    @Query('getAdministrative')
+    async getAdministrative(): Promise<Administrative[]> {
+        return await this.usersService.getAdministratives();
     }
 
     @Mutation('createUser')

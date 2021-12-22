@@ -6,7 +6,7 @@ import { Campus } from './campus.entity';
 export class Administratives extends BaseEntity {
     @Column({ name: 'id_administrative', type: 'uuid', primary: true })
     @JoinColumn({ name: 'id_administrative' })
-    @OneToOne(() => Users)
+    @ManyToOne(() => Users)
     user: Users
 
     @Column({ name: 'id_campus', type: 'uuid' })

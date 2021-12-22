@@ -22,6 +22,7 @@ export class CountryData {
 
 export class FollowData {
     type: string;
+    migrant: string;
 }
 
 export class MigrantPersonData {
@@ -52,6 +53,7 @@ export class MigrantPersonData {
     typeIncome: string;
     studyValidationProcess: string;
     occupationCountryOrigen: string;
+    country: string;
 }
 
 export class UserData {
@@ -59,6 +61,7 @@ export class UserData {
     name: string;
     email: string;
     password?: string;
+    campus: string;
 }
 
 export abstract class IMutation {
@@ -102,6 +105,8 @@ export abstract class IQuery {
     abstract getMigrantsPersons(): MigrantPerson[] | Promise<MigrantPerson[]>;
 
     abstract getUsers(): User[] | Promise<User[]>;
+
+    abstract getAdministrative(): Administrative[] | Promise<Administrative[]>;
 }
 
 export class Venue {
@@ -123,6 +128,7 @@ export class Country {
 export class Follo {
     id: string;
     type: string;
+    migrant: MigrantPerson;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;
@@ -157,6 +163,7 @@ export class MigrantPerson {
     typeIncome: string;
     studyValidationProcess: string;
     occupationCountryOrigen: string;
+    country: Country;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;
@@ -170,6 +177,14 @@ export class User {
     passwordHash: string;
     passwordSalt: string;
     state: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date;
+}
+
+export class Administrative {
+    user: User;
+    campus: Venue;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;

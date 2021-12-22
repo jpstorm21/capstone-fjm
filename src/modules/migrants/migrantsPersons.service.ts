@@ -2,6 +2,7 @@ import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MigrantsPersonRepository } from './../../repository/migrantsPersons.repository';
 import { MigrantPerson, MigrantPersonData } from './../../graphql.schema';
+import { CountriesRepository } from 'src/repository/countries.repository';
 
 
 @Injectable()
@@ -9,7 +10,8 @@ export class MigrantsPersonsService {
     private logger: Logger = new Logger(MigrantsPersonsService.name);
 
     constructor(
-        @InjectRepository(MigrantsPersonRepository) private migrantsPersonsRepository: MigrantsPersonRepository
+        @InjectRepository(MigrantsPersonRepository) private migrantsPersonsRepository: MigrantsPersonRepository,
+        @InjectRepository(CountriesRepository) private countriesRepository: CountriesRepository
     ) {}
 
     async getMigrantsPerson(): Promise<MigrantPerson[]> {
@@ -24,7 +26,7 @@ export class MigrantsPersonsService {
     async createMigrantPerson(migrantPersonData: MigrantPersonData): Promise<MigrantPerson> {
         try {
             this.logger.debug(`creating migrant=${JSON.stringify(migrantPersonData)}`);
-            const { name, run, dni, passport, other, age, sex, levelStudy, civilStatus, birthDate, admissionDate, phone, email, address, visa, visaState, currentOccupation, profession, networksDescription, derivationDescription, chileanTies, residentTies, reasonConsultation, jobPlacement, typeIncome, studyValidationProcess, occupationCountryOrigen } = migrantPersonData;
+            const { name, run, dni, passport, other, age, sex, levelStudy, civilStatus, birthDate, admissionDate, phone, email, address, visa, visaState, currentOccupation, profession, networksDescription, derivationDescription, chileanTies, residentTies, reasonConsultation, jobPlacement, typeIncome, studyValidationProcess, occupationCountryOrigen, country } = migrantPersonData;
 
             if (!name) {
                 throw new HttpException(
@@ -50,6 +52,12 @@ export class MigrantsPersonsService {
             if (!typeIncome) {
                 throw new HttpException(
                     'Param typeIncome is undefined',
+                    HttpStatus.BAD_REQUEST,
+                );
+            }
+            if (!country) {
+                throw new HttpException(
+                    'Param country is undefined',
                     HttpStatus.BAD_REQUEST,
                 );
             }
@@ -87,8 +95,11 @@ export class MigrantsPersonsService {
                 );
             }
             
+            const countryById = await this.countriesRepository.findOne({
+                where: {id: country, deletedAt: null}
+            })
             console.log(migrantPersonData)
-            return await this.migrantsPersonsRepository.insertMigrantPerson(migrantPersonData);
+            return await this.migrantsPersonsRepository.insertMigrantPerson(migrantPersonData, countryById);
         } catch (error) {
             throw error;
         }

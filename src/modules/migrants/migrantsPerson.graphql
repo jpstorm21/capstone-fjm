@@ -39,6 +39,7 @@ type MigrantPerson {
   typeIncome: String!
   studyValidationProcess: String!
   occupationCountryOrigen: String!
+  country: Country!
   createdAt: Date!
   updatedAt: Date!
   deletedAt: Date!
@@ -72,4 +73,5 @@ input MigrantPersonData {
   typeIncome: String!
   studyValidationProcess: String!
   occupationCountryOrigen: String!
+  country: String!
 }

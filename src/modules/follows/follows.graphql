@@ -11,6 +11,7 @@ type Mutation {
 type Follo {
   id: ID!
   type: String!
+  migrant: MigrantPerson!
   createdAt: Date!
   updatedAt: Date!
   deletedAt: Date!
@@ -18,4 +19,5 @@ type Follo {
 
 input FollowData {
   type: String!
+  migrant: String!
 }
