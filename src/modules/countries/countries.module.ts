@@ -5,10 +5,7 @@ import { CountriesService } from './countries.service';
 import { CountriesRepository } from '../../repository/countries.repository';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([CountriesRepository]),        
-    ],
-    providers: [CountriesResolver, CountriesService]
+  imports: [TypeOrmModule.forFeature([CountriesRepository])],
+  providers: [CountriesResolver, CountriesService],
 })
-
-export class CountriesModule {};
+export class CountriesModule {}

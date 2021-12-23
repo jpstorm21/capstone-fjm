@@ -4,9 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 
 // entities
-import { 
-  Users, 
-  SuperAdmins, 
+import {
+  Users,
+  SuperAdmins,
   Administratives,
   Campus,
   Countries,
@@ -15,15 +15,29 @@ import {
   MigrantPersons,
   Records,
   Relatives,
-  States
+  States,
 } from './entities';
 
 // Modules
-import { UsersModule, AuthModule, CountriesModule, CampusModule, MigrantsPersonsModule, FollowsModule } from './modules';
+import {
+  UsersModule,
+  AuthModule,
+  CountriesModule,
+  CampusModule,
+  MigrantsPersonsModule,
+  FollowsModule,
+} from './modules';
 
 dotenv.config();
 
-const { TYPEORM_HOST, TYPEORM_USERNAME, TYPEORM_PASSWORD, TYPEORM_DATABASE, TYPEORM_SYNCHRONIZE, TYPEORM_CONNECTION } =  process.env;
+const {
+  TYPEORM_HOST,
+  TYPEORM_USERNAME,
+  TYPEORM_PASSWORD,
+  TYPEORM_DATABASE,
+  TYPEORM_SYNCHRONIZE,
+  TYPEORM_CONNECTION,
+} = process.env;
 
 @Module({
   imports: [
@@ -48,7 +62,7 @@ const { TYPEORM_HOST, TYPEORM_USERNAME, TYPEORM_PASSWORD, TYPEORM_DATABASE, TYPE
       password: TYPEORM_PASSWORD,
       database: TYPEORM_DATABASE,
       entities: [
-        Users, 
+        Users,
         SuperAdmins,
         Administratives,
         Campus,
@@ -58,13 +72,13 @@ const { TYPEORM_HOST, TYPEORM_USERNAME, TYPEORM_PASSWORD, TYPEORM_DATABASE, TYPE
         MigrantPersons,
         Records,
         Relatives,
-        States
+        States,
       ],
-      synchronize: TYPEORM_SYNCHRONIZE == "true" ? true : false,
+      synchronize: TYPEORM_SYNCHRONIZE == 'true' ? true : false,
       retryDelay: 3000,
       retryAttempts: 10,
-      keepConnectionAlive: true
-    })
+      keepConnectionAlive: true,
+    }),
   ],
   controllers: [],
   providers: [],

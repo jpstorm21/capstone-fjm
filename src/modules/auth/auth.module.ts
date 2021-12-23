@@ -12,14 +12,13 @@ dotenv.config();
 const { JWT_SECRET } = process.env;
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([UsersRepository]),
-        JwtModule.register({
-            secret: JWT_SECRET,
-            signOptions: { expiresIn: '4h' },
-        }),
-    ],
-    providers: [AuthResolver, AuthService]
+  imports: [
+    TypeOrmModule.forFeature([UsersRepository]),
+    JwtModule.register({
+      secret: JWT_SECRET,
+      signOptions: { expiresIn: '4h' },
+    }),
+  ],
+  providers: [AuthResolver, AuthService],
 })
-
-export class AuthModule {};
+export class AuthModule {}

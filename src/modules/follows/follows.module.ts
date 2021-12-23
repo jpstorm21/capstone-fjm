@@ -6,10 +6,9 @@ import { FollowResolver } from './follows.resolver';
 import { FollowService } from './follows.service';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([FollowsRepository, MigrantsPersonRepository]),        
-    ],
-    providers: [FollowResolver, FollowService]
+  imports: [
+    TypeOrmModule.forFeature([FollowsRepository, MigrantsPersonRepository]),
+  ],
+  providers: [FollowResolver, FollowService],
 })
-
-export class FollowsModule {};
+export class FollowsModule {}

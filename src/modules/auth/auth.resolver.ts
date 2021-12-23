@@ -5,27 +5,26 @@ import { AuthService } from './auth.service';
 
 @Resolver('Auth')
 export class AuthResolver {
-    constructor(
-        private readonly authService: AuthService,
-        private jwtService: JwtService
-    ) {}
+  constructor(
+    private readonly authService: AuthService,
+    private jwtService: JwtService,
+  ) {}
 
-    @Mutation('login')
-    async login(@Args('input') args: InputLogin): Promise<LoginResponse> {
-        try {
-            const user = await this.authService.login(args);
+  @Mutation('login')
+  async login(@Args('input') args: InputLogin): Promise<LoginResponse> {
+    try {
+      const user = await this.authService.login(args);
 
-            const token = this.jwtService.sign({user});
+      const token = this.jwtService.sign({ user });
 
-            const response: LoginResponse = {
-                user,
-                token
-            };
+      const response: LoginResponse = {
+        user,
+        token,
+      };
 
-            return response;
-
-        } catch (error) {
-            throw error;
-        }
+      return response;
+    } catch (error) {
+      throw error;
     }
+  }
 }

@@ -7,42 +7,46 @@ import { JwtAuthGuard } from 'src/security/guards/jwt-auth.guard';
 /* @UseGuards(JwtAuthGuard) */
 @Resolver()
 export class UsersResolver {
-    constructor(
-        private readonly usersService: UsersService
-    ) {}
+  constructor(private readonly usersService: UsersService) {}
 
-    @Query('getUsers')
-    async getUsers(): Promise<User[]> {
-        return await this.usersService.getUsers();
-    }
+  @Query('getUsers')
+  async getUsers(): Promise<User[]> {
+    return await this.usersService.getUsers();
+  }
 
-    @Query('getAdministrative')
-    async getAdministrative(): Promise<Administrative[]> {
-        return await this.usersService.getAdministratives();
-    }
+  @Query('getAdministrative')
+  async getAdministrative(): Promise<Administrative[]> {
+    return await this.usersService.getAdministratives();
+  }
 
-    @Mutation('createUser')
-    async createUser(@Args('input') args: UserData): Promise<User> {
-        return await this.usersService.createUser(args);
-    }
+  @Mutation('createAdminstrative')
+  async createUser(@Args('input') args: UserData): Promise<Administrative> {
+    return await this.usersService.createUser(args);
+  }
 
-    @Mutation('changeState')
-    async changeState(@Args('id') id: string): Promise<User> {
-        return await this.usersService.changeState(id);
-    }
+  @Mutation('changeState')
+  async changeState(@Args('id') id: string): Promise<Administrative> {
+    return await this.usersService.changeState(id);
+  }
 
-    @Mutation('deleteUser')
-    async deleteUser(@Args('id') id: string): Promise<User> {
-        return await this.usersService.deleteUser(id);
-    }
+  @Mutation('deleteAdminstrativer')
+  async deleteUser(@Args('id') id: string): Promise<Administrative> {
+    return await this.usersService.deleteUser(id);
+  }
 
-    @Mutation('editUser')
-    async editUser(@Args('id') id: string, @Args('input') args: UserData): Promise<User> {
-        return await this.usersService.editUser(id, args);
-    }
+  @Mutation('editAdminstrative')
+  async editUser(
+    @Args('id') id: string,
+    @Args('input') args: UserData,
+  ): Promise<Administrative> {
+    return await this.usersService.editUser(id, args);
+  }
 
-    @Mutation('changePassword')
-    async changePassword(@Args('id') id: string, @Args('password') password: string): Promise<User> {
-        return await this.usersService.changePassword(id, password);
-    }
+  @Mutation('changePassword')
+  async changePassword(
+    @Args('id') id: string,
+    @Args('password') password: string,
+  ): Promise<Administrative> {
+    return await this.usersService.changePassword(id, password);
+  }
 }

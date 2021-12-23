@@ -6,11 +6,11 @@ type Query {
 }
 
 type Mutation {
-  createUser(input: UserData): User
-  editUser(id: ID, input: UserData): User
-  changeState(id: ID): User
-  deleteUser(id: ID): User
-  changePassword(id: ID, password: String): User
+  createAdminstrative(input: UserData): Administrative
+  editAdminstrative(id: ID, input: UserData): Administrative
+  changeState(id: ID): Administrative
+  deleteAdminstrativer(id: ID): Administrative
+  changePassword(id: ID, password: String): Administrative
 }
 
 type User {

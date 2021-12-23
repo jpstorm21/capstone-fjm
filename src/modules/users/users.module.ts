@@ -7,10 +7,13 @@ import { CampusRepository } from 'src/repository/campus.repository';
 import { UsersAdministrativeRepository } from 'src/repository/administrative.repository';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([UsersRepository, CampusRepository, UsersAdministrativeRepository])
-    ],
-    providers: [UsersResolver, UsersService]
+  imports: [
+    TypeOrmModule.forFeature([
+      UsersRepository,
+      CampusRepository,
+      UsersAdministrativeRepository,
+    ]),
+  ],
+  providers: [UsersResolver, UsersService],
 })
-
-export class UsersModule {};
+export class UsersModule {}
