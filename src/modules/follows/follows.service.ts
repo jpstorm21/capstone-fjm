@@ -25,7 +25,7 @@ export class FollowService {
       throw error;
     }
   }
-  async getFollowsByMigrant(id: string ): Promise<Follo> {
+  async getFollowsByMigrant(id: string ): Promise<Follo[]> {
     try {
       this.logger.debug('getting follows');
       return await this.followsRepository.getFollowMigrantById(id);

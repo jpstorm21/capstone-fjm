@@ -18,9 +18,9 @@ export class FollowsRepository extends Repository<Follow> {
     }
   }
 
-  public async getFollowMigrantById(id: any): Promise<Follow> {
+  public async getFollowMigrantById(id: any): Promise<Follow[]> {
     try {
-      return this.findOne({
+      return this.find({
         relations: ['migrant'],
         where: { deletedAt: null, migrant: id },
       });

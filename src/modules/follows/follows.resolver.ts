@@ -12,7 +12,7 @@ export class FollowResolver {
   }
 
   @Mutation('getFollowsByMigrant')
-  async getFollowsByMigrant(@Args('id') args: string): Promise<Follo>{
+  async getFollowsByMigrant(@Args('id') args: string): Promise<Follo[]>{
     return await this.followService.getFollowsByMigrant(args);
   }
 

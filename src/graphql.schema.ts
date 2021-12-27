@@ -73,7 +73,7 @@ export abstract class IMutation {
 
     abstract createFollow(input?: FollowData): Follo | Promise<Follo>;
 
-    abstract getFollowsByMigrant(migrant?: string): Follo | Promise<Follo>;
+    abstract getFollowsByMigrant(id?: string): Follo[] | Promise<Follo[]>;
 
     abstract getMigrantsPersonsName(name?: string): MigrantPerson | Promise<MigrantPerson>;
 
