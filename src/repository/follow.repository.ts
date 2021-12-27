@@ -18,6 +18,17 @@ export class FollowsRepository extends Repository<Follow> {
     }
   }
 
+  public async getFollowMigrantById(id: any): Promise<Follow> {
+    try {
+      return this.findOne({
+        relations: ['migrant'],
+        where: { deletedAt: null, migrant: id },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   public async insertFollow(
     followData: FollowData,
     migrantPerson: MigrantPersons,

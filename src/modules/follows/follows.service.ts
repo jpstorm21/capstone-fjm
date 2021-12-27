@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Follo, FollowData } from 'src/graphql.schema';
 import { FollowsRepository } from 'src/repository/follow.repository';
 import { MigrantsPersonRepository } from 'src/repository/migrantsPersons.repository';
+import { MigrantPersons } from './../../entities/migrantPersons.entity';
+import { MigrantPerson } from './../../graphql.schema';
 
 @Injectable()
 export class FollowService {
@@ -19,6 +21,14 @@ export class FollowService {
     try {
       this.logger.debug('getting follows');
       return await this.followsRepository.getFollows();
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getFollowsByMigrant(id: string ): Promise<Follo> {
+    try {
+      this.logger.debug('getting follows');
+      return await this.followsRepository.getFollowMigrantById(id);
     } catch (error) {
       throw error;
     }
@@ -54,6 +64,7 @@ export class FollowService {
       const migrantById = await this.migrantsPersonRepository.findOne({
         where: { id: migrant, deletedAt: null },
       });
+      console.log(migrantById);
       console.log(followData);
       return await this.followsRepository.insertFollow(followData, migrantById);
     } catch (error) {

@@ -6,6 +6,7 @@ type Query {
 
 type Mutation {
   createFollow(input: FollowData): Follo
+  getFollowsByMigrant(migrant: String): Follo
 }
 
 type Follo {

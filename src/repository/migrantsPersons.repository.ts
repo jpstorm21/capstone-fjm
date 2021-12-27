@@ -133,6 +133,17 @@ export class MigrantsPersonRepository extends Repository<MigrantPersons> {
       throw error;
     }
   }
+  public async getMigrantByName(name: string): Promise<MigrantPerson> {
+    try {
+      if (name) {
+        return await this.findOne({
+          where: { name: name, deletedAt: null },
+        });
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 
   public async getMigrantById(id: string): Promise<MigrantPerson> {
     try {

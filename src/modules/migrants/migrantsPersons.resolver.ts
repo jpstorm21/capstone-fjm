@@ -14,6 +14,10 @@ export class MigrantsPersonsResolver {
   async getMigrantsPersons(): Promise<MigrantPerson[]> {
     return await this.migrantsPersonsService.getMigrantsPerson();
   }
+  @Mutation('getMigrantsPersonsName')
+  async getMigrantsPersonsName(@Args('name') name: string): Promise<MigrantPerson> {
+    return await this.migrantsPersonsService.getMigrantsPersonName(name);
+  }
 
   @Mutation('createMigrantPerson')
   async createMigrantPerson(
