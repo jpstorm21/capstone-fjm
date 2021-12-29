@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersRepository } from '../../repository/users.repository';
+import { UsersAdministrativeRepository } from 'src/repository/administrative.repository';
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
+import { LoginUnionResolver } from './loginUnionResolver.resolver';
 import { JwtModule } from '@nestjs/jwt';
 
 import * as dotenv from 'dotenv';
@@ -13,12 +15,12 @@ const { JWT_SECRET } = process.env;
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UsersRepository]),
+    TypeOrmModule.forFeature([UsersRepository, UsersAdministrativeRepository]),
     JwtModule.register({
       secret: JWT_SECRET,
       signOptions: { expiresIn: '4h' },
     }),
   ],
-  providers: [AuthResolver, AuthService],
+  providers: [AuthResolver, AuthService, LoginUnionResolver],
 })
 export class AuthModule {}

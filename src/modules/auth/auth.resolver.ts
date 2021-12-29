@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
-import { InputLogin, LoginResponse } from 'src/graphql.schema';
+import { InputLogin, LoginResult, LoginResponseAdmin, LoginResponseAdministrative } from 'src/graphql.schema';
 import { AuthService } from './auth.service';
 
 @Resolver('Auth')
@@ -8,21 +8,32 @@ export class AuthResolver {
   constructor(
     private readonly authService: AuthService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   @Mutation('login')
-  async login(@Args('input') args: InputLogin): Promise<LoginResponse> {
+  async login(@Args('input') args: InputLogin): Promise<LoginResult> {
     try {
-      const user = await this.authService.login(args);
+      const { user, type } = await this.authService.login(args);
 
       const token = this.jwtService.sign({ user });
 
-      const response: LoginResponse = {
-        user,
-        token,
-      };
+      if (type === 'admin') {
+        const responseAdmin: LoginResponseAdmin = {
+          token,
+          admin: user,
+          type
+        };
 
-      return response;
+        return responseAdmin;
+      } else {
+        const responseAdministrative: LoginResponseAdministrative = {
+          token,
+          administrative: user,
+          type
+        }
+
+        return responseAdministrative;
+      }
     } catch (error) {
       throw error;
     }

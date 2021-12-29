@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { InputLogin } from 'src/graphql.schema';
 import { verifyPassword } from '../../utils/bcrypt';
 import { UsersRepository } from '../../repository/users.repository';
+import { UsersAdministrativeRepository } from '../../repository/administrative.repository';
 
 @Injectable()
 export class AuthService {
@@ -10,16 +11,17 @@ export class AuthService {
 
   constructor(
     @InjectRepository(UsersRepository) private usersRepository: UsersRepository,
+    @InjectRepository(UsersAdministrativeRepository) private usersAdministrativeRepository: UsersAdministrativeRepository,
   ) {}
 
   async login(params: InputLogin): Promise<any> {
     try {
       this.logger.debug(`login with params= ${JSON.stringify(params)}`);
-      const { run, password } = params;
+      const { email, password } = params;
 
-      if (!run) {
+      if (!email) {
         throw new HttpException(
-          'Param run is undefined',
+          'Param email is undefined',
           HttpStatus.BAD_REQUEST,
         );
       }
@@ -31,21 +33,29 @@ export class AuthService {
         );
       }
 
-      const user = await this.usersRepository.getUserByRut(run);
+      const user = await this.usersRepository.getUserByEmail(email);
 
       if (!user) {
         throw new HttpException(
-          `Users with run=${run} not exists`,
+          `Users with email=${email} not exists`,
           HttpStatus.BAD_REQUEST,
         );
       }
 
       const matchPassword = await verifyPassword(password, user.passwordHash);
-
+      
       if (matchPassword) {
         delete user.passwordHash;
         delete user.passwordSalt;
-        return user;
+        
+        const isAdministrative = await this.usersAdministrativeRepository.count({ where: { user: user.id }}) > 0 ? true : false;
+
+        if (isAdministrative) {
+          const administrative = await this.usersAdministrativeRepository.getUsersAdministrativesById(user.id);
+          return { user: administrative, type: 'administrative' }
+        }
+
+        return { user, type: 'admin' }
       } else {
         throw new HttpException(
           `Run o password incorrect`,
