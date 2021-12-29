@@ -5,6 +5,7 @@ type Query {
 }
 
 type Mutation {
+  getMigrantsPersonsName(name: String): MigrantPerson
   createMigrantPerson(input: MigrantPersonData): MigrantPerson
   editMigrantPerson(id: ID, input: MigrantPersonData): MigrantPerson
   deleteMigrantPerson(id: ID): MigrantPerson

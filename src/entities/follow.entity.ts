@@ -25,7 +25,7 @@ export class Follow extends BaseEntity {
   followStates: FollowStates[];
 
   @Column({ name: 'id_migrants', type: 'uuid' })
-  @JoinColumn({ name: 'id_migrant' })
+  @JoinColumn({ name: 'id_migrants' })
   @ManyToOne(() => MigrantPersons)
   migrant: MigrantPersons;
 
