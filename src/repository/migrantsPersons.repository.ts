@@ -163,7 +163,8 @@ export class MigrantsPersonRepository extends Repository<MigrantPersons> {
 
   public async editMigrant(
     migrant: MigrantPerson,
-    migrantData: MigrantPersonData,
+    migrantData: MigrantPersonData, 
+    country: Countries   
   ): Promise<MigrantPerson> {
     const {
       name,
@@ -192,7 +193,7 @@ export class MigrantsPersonRepository extends Repository<MigrantPersons> {
       jobPlacement,
       typeIncome,
       studyValidationProcess,
-      occupationCountryOrigen,
+      occupationCountryOrigen,      
     } = migrantData;
 
     migrant.name = name;
@@ -222,6 +223,7 @@ export class MigrantsPersonRepository extends Repository<MigrantPersons> {
     migrant.typeIncome = typeIncome;
     migrant.studyValidationProcess = studyValidationProcess;
     migrant.occupationCountryOrigen = occupationCountryOrigen;
+    migrant.country = country;
 
     return await this.save(migrant);
   }

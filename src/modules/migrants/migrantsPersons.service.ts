@@ -225,6 +225,7 @@ export class MigrantsPersonsService {
         typeIncome,
         studyValidationProcess,
         occupationCountryOrigen,
+        country
       } = migrantData;
 
       if (!id) {
@@ -260,6 +261,18 @@ export class MigrantsPersonsService {
           HttpStatus.BAD_REQUEST,
         );
       }
+      if (!typeIncome) {
+        throw new HttpException(
+          'Param typeIncome is undefined',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      if (!country) {
+        throw new HttpException(
+          'Param country is undefined',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
 
       const migrantById = await this.migrantsPersonsRepository.getMigrantById(
         id,
@@ -271,6 +284,10 @@ export class MigrantsPersonsService {
           HttpStatus.BAD_REQUEST,
         );
       }
+
+      const countryById = await this.countriesRepository.findOne({
+        where: { id: country, deletedAt: null },
+      });
 
       const migrantByRut = await this.migrantsPersonsRepository.getMigrantByRut(
         run,
@@ -286,6 +303,7 @@ export class MigrantsPersonsService {
           return await this.migrantsPersonsRepository.editMigrant(
             migrantById,
             migrantData,
+            countryById
           );
         }
       }
@@ -296,7 +314,7 @@ export class MigrantsPersonsService {
           migrantByRut.id !== migrantById.id
         ) {
           throw new HttpException(
-            `Users with email=${email} or run=${run} exists`,
+            `Users with passport=${passport} or run=${run} exists`,
             HttpStatus.BAD_REQUEST,
           );
         }
@@ -310,6 +328,7 @@ export class MigrantsPersonsService {
         return await this.migrantsPersonsRepository.editMigrant(
           migrantById,
           migrantData,
+          countryById
         );
       }
 
@@ -319,7 +338,7 @@ export class MigrantsPersonsService {
         !migrantByRut
       ) {
         throw new HttpException(
-          `Users with email=${email} exists`,
+          `Users with email=${passport} exists`,
           HttpStatus.BAD_REQUEST,
         );
       }
@@ -332,6 +351,7 @@ export class MigrantsPersonsService {
         return await this.migrantsPersonsRepository.editMigrant(
           migrantById,
           migrantData,
+          countryById
         );
       }
 
@@ -364,7 +384,7 @@ export class MigrantsPersonsService {
           migrantByRut.id === migrantById.id
         ) {
           throw new HttpException(
-            `Users with email=${email} existe`,
+            `Users with passport=${passport} existe`,
             HttpStatus.BAD_REQUEST,
           );
         }
@@ -374,6 +394,7 @@ export class MigrantsPersonsService {
         return await this.migrantsPersonsRepository.editMigrant(
           migrantById,
           migrantData,
+          countryById
         );
       }
     } catch (error) {
