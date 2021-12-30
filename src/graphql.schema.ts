@@ -56,6 +56,11 @@ export class MigrantPersonData {
     country: string;
 }
 
+export class StateData {
+    type: string;
+    typeNumber: number;
+}
+
 export class UserData {
     run: string;
     name: string;
@@ -73,11 +78,19 @@ export abstract class IMutation {
 
     abstract createFollow(input?: FollowData): Follo | Promise<Follo>;
 
+    abstract getFollowsByMigrant(id?: string): Follo[] | Promise<Follo[]>;
+
+    abstract getMigrantsPersonsName(name?: string): MigrantPerson | Promise<MigrantPerson>;
+
     abstract createMigrantPerson(input?: MigrantPersonData): MigrantPerson | Promise<MigrantPerson>;
 
     abstract editMigrantPerson(id?: string, input?: MigrantPersonData): MigrantPerson | Promise<MigrantPerson>;
 
     abstract deleteMigrantPerson(id?: string): MigrantPerson | Promise<MigrantPerson>;
+
+    abstract createState(input?: StateData): State | Promise<State>;
+
+    abstract getStatesByMigrant(id?: string): State[] | Promise<State[]>;
 
     abstract createAdminstrative(input?: UserData): Administrative | Promise<Administrative>;
 
@@ -110,6 +123,8 @@ export abstract class IQuery {
     abstract getFollows(): Follo[] | Promise<Follo[]>;
 
     abstract getMigrantsPersons(): MigrantPerson[] | Promise<MigrantPerson[]>;
+
+    abstract getStates(): State[] | Promise<State[]>;
 
     abstract getUsers(): User[] | Promise<User[]>;
 
@@ -171,6 +186,15 @@ export class MigrantPerson {
     studyValidationProcess: string;
     occupationCountryOrigen: string;
     country: Country;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date;
+}
+
+export class State {
+    id: string;
+    type: string;
+    typeNumber: number;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;

@@ -18,6 +18,9 @@ export class States extends BaseEntity {
   @Column({ name: 'type', type: 'text', nullable: true })
   type: string;
 
+  @Column({ name: 'type_number', type: 'integer', nullable:true})
+  typeNumber: number;
+
   @OneToMany(() => FollowStates, (followStates) => followStates.state)
   followStates: FollowStates[];
 
