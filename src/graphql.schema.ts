@@ -72,6 +72,8 @@ export class UserData {
 export abstract class IMutation {
     abstract login(input?: InputLogin): LoginResult | Promise<LoginResult>;
 
+    abstract refreshToken(): LoginResult | Promise<LoginResult>;
+
     abstract createVenue(input?: VenueData): Venue | Promise<Venue>;
 
     abstract createCountry(input?: CountryData): Country | Promise<Country>;
