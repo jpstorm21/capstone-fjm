@@ -20,6 +20,13 @@ export class CountryData {
     name: string;
 }
 
+export class FollowStateData {
+    follow: string;
+    state: string;
+    date: Date;
+    comments: string;
+}
+
 export class FollowData {
     type: string;
     migrant: string;
@@ -54,6 +61,7 @@ export class MigrantPersonData {
     studyValidationProcess: string;
     occupationCountryOrigen: string;
     country: string;
+    campus: string;
 }
 
 export class StateData {
@@ -77,6 +85,14 @@ export abstract class IMutation {
     abstract createVenue(input?: VenueData): Venue | Promise<Venue>;
 
     abstract createCountry(input?: CountryData): Country | Promise<Country>;
+
+    abstract getFollowStateById(idFollow?: string, idState?: string): FollowState | Promise<FollowState>;
+
+    abstract createFollowState(input?: FollowStateData): FollowState | Promise<FollowState>;
+
+    abstract editFollowState(idFollow?: string, idState?: string, input?: FollowStateData): FollowState | Promise<FollowState>;
+
+    abstract deleteFollowState(idFollow?: string, idState?: string): FollowState | Promise<FollowState>;
 
     abstract createFollow(input?: FollowData): Follo | Promise<Follo>;
 
@@ -122,6 +138,8 @@ export abstract class IQuery {
 
     abstract getCountries(): Country[] | Promise<Country[]>;
 
+    abstract getFollowStates(): FollowState[] | Promise<FollowState[]>;
+
     abstract getFollows(): Follo[] | Promise<Follo[]>;
 
     abstract getMigrantsPersons(): MigrantPerson[] | Promise<MigrantPerson[]>;
@@ -144,6 +162,16 @@ export class Venue {
 export class Country {
     id: string;
     name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date;
+}
+
+export class FollowState {
+    follow: Follo;
+    state: State;
+    date: Date;
+    comments: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;
@@ -188,6 +216,7 @@ export class MigrantPerson {
     studyValidationProcess: string;
     occupationCountryOrigen: string;
     country: Country;
+    campus: Venue;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;

@@ -14,6 +14,7 @@ import { Countries } from './countries.entity';
 import { Records } from './records.entity';
 import { Relatives } from './relatives.entity';
 import { Follow } from './follow.entity';
+import { Campus } from './campus.entity';
 
 @Entity()
 export class MigrantPersons extends BaseEntity {
@@ -105,6 +106,11 @@ export class MigrantPersons extends BaseEntity {
   @JoinColumn({ name: 'id_country' })
   @ManyToOne(() => Countries)
   country: Countries;
+
+  @Column({ name: 'id_campus', type: 'uuid' })
+  @JoinColumn({ name: 'id_campus' })
+  @ManyToOne(() => Campus)
+  campus: Campus;
 
   @OneToMany(() => Follow, (follow) => follow.migrant)
   follow: Follow[];

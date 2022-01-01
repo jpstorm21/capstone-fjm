@@ -1,0 +1,33 @@
+scalar Date
+
+type Query {
+  getFollowStates: [FollowState]
+}
+
+type Mutation {
+  getFollowStateById(idFollow: ID, idState: ID): FollowState
+  createFollowState(input: FollowStateData): FollowState
+  editFollowState(
+    idFollow: ID
+    idState: ID
+    input: FollowStateData
+  ): FollowState
+  deleteFollowState(idFollow: ID, idState: ID): FollowState
+}
+
+type FollowState {
+  follow: Follo!
+  state: State!
+  date: Date!
+  comments: String!
+  createdAt: Date!
+  updatedAt: Date!
+  deletedAt: Date!
+}
+
+input FollowStateData {
+  follow: String!
+  state: String!
+  date: Date!
+  comments: String!
+}

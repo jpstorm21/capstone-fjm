@@ -26,7 +26,8 @@ import {
   CampusModule,
   MigrantsPersonsModule,
   FollowsModule,
-  StatesModule
+  StatesModule,
+  FollowStateModule
 } from './modules';
 
 dotenv.config();
@@ -41,14 +42,15 @@ const {
 } = process.env;
 
 @Module({
-  imports: [
-    UsersModule,
+  imports: [ 
+  UsersModule,
     AuthModule,
     CountriesModule,
     CampusModule,
     MigrantsPersonsModule,
     FollowsModule,
     StatesModule,
+    FollowStateModule,
     GraphQLModule.forRoot({
       typePaths: ['./**/**/*.graphql'],
       installSubscriptionHandlers: true,

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MigrantsPersonRepository } from './../../repository/migrantsPersons.repository';
 import { MigrantPerson, MigrantPersonData } from './../../graphql.schema';
 import { CountriesRepository } from 'src/repository/countries.repository';
+import { CampusRepository } from 'src/repository/campus.repository';
 
 @Injectable()
 export class MigrantsPersonsService {
@@ -11,8 +12,10 @@ export class MigrantsPersonsService {
   constructor(
     @InjectRepository(MigrantsPersonRepository)
     private migrantsPersonsRepository: MigrantsPersonRepository,
-    @InjectRepository(CountriesRepository)
+    @InjectRepository(CountriesRepository)    
     private countriesRepository: CountriesRepository,
+    @InjectRepository(CampusRepository)
+    private campusRepository: CampusRepository
   ) {}
 
   async getMigrantsPerson(): Promise<MigrantPerson[]> {
@@ -68,6 +71,7 @@ export class MigrantsPersonsService {
         studyValidationProcess,
         occupationCountryOrigen,
         country,
+        campus
       } = migrantPersonData;
 
       if (!name) {
@@ -98,6 +102,12 @@ export class MigrantsPersonsService {
         );
       }
       if (!country) {
+        throw new HttpException(
+          'Param country is undefined',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      if (!campus) {
         throw new HttpException(
           'Param country is undefined',
           HttpStatus.BAD_REQUEST,
@@ -146,11 +156,15 @@ export class MigrantsPersonsService {
       const countryById = await this.countriesRepository.findOne({
         where: { id: country, deletedAt: null },
       });
+      const campusById = await this.campusRepository.findOne({
+        where: { id: campus, deletedAt: null },
+      });
       console.log(countryById);
       console.log(migrantPersonData);
       return await this.migrantsPersonsRepository.insertMigrantPerson(
         migrantPersonData,
         countryById,
+        campusById
       );
     } catch (error) {
       throw error;
@@ -225,7 +239,8 @@ export class MigrantsPersonsService {
         typeIncome,
         studyValidationProcess,
         occupationCountryOrigen,
-        country
+        country,
+        campus
       } = migrantData;
 
       if (!id) {
@@ -273,6 +288,12 @@ export class MigrantsPersonsService {
           HttpStatus.BAD_REQUEST,
         );
       }
+      if (!campus) {
+        throw new HttpException(
+          'Param campus is undefined',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
 
       const migrantById = await this.migrantsPersonsRepository.getMigrantById(
         id,
@@ -287,6 +308,9 @@ export class MigrantsPersonsService {
 
       const countryById = await this.countriesRepository.findOne({
         where: { id: country, deletedAt: null },
+      });
+      const campusById = await this.campusRepository.findOne({
+        where: { id: campus, deletedAt: null },
       });
 
       const migrantByRut = await this.migrantsPersonsRepository.getMigrantByRut(
@@ -303,7 +327,8 @@ export class MigrantsPersonsService {
           return await this.migrantsPersonsRepository.editMigrant(
             migrantById,
             migrantData,
-            countryById
+            countryById,
+            campusById
           );
         }
       }
@@ -328,7 +353,8 @@ export class MigrantsPersonsService {
         return await this.migrantsPersonsRepository.editMigrant(
           migrantById,
           migrantData,
-          countryById
+          countryById,
+          campusById
         );
       }
 
@@ -351,7 +377,8 @@ export class MigrantsPersonsService {
         return await this.migrantsPersonsRepository.editMigrant(
           migrantById,
           migrantData,
-          countryById
+          countryById,
+          campusById
         );
       }
 
@@ -394,7 +421,8 @@ export class MigrantsPersonsService {
         return await this.migrantsPersonsRepository.editMigrant(
           migrantById,
           migrantData,
-          countryById
+          countryById,
+          campusById
         );
       }
     } catch (error) {

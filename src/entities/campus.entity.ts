@@ -9,6 +9,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Administratives } from './administratives.entity';
+import { MigrantPersons } from './migrantPersons.entity';
 
 @Entity()
 export class Campus extends BaseEntity {
@@ -20,6 +21,9 @@ export class Campus extends BaseEntity {
 
   @OneToMany(() => Administratives, (administrative) => administrative.campus)
   administrative: Administratives[];
+
+  @OneToMany(() => MigrantPersons, (migrantPerson) => migrantPerson.country)
+  migrantPerson: MigrantPersons[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: 'NOW' })
   createdAt: Date;

@@ -2,6 +2,10 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Follo, FollowData } from 'src/graphql.schema';
 import { FollowService } from './follows.service';
 import { MigrantPerson } from './../../graphql.schema';
+import { JwtAuthGuard } from 'src/security/guards/jwt-auth.guard';
+import { UseGuards } from '@nestjs/common';
+
+@UseGuards(JwtAuthGuard)
 
 @Resolver('Follo')
 export class FollowResolver {

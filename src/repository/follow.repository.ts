@@ -28,6 +28,16 @@ export class FollowsRepository extends Repository<Follow> {
       throw error;
     }
   }
+  public async getFollowById(id: string): Promise<Follo> {
+    try {
+      return await this.findOne({
+        where: { id: id, deletedAt: null },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
 
   public async insertFollow(
     followData: FollowData,

@@ -2,8 +2,12 @@ import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { MigrantsPersonsService } from './migrantsPersons.service';
 import { MigrantPerson, MigrantPersonData } from './../../graphql.schema';
+import { JwtAuthGuard } from 'src/security/guards/jwt-auth.guard';
 
-/* @UseGuards(JwtAuthGuard) */
+
+
+
+@UseGuards(JwtAuthGuard)
 @Resolver()
 export class MigrantsPersonsResolver {
   constructor(

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { MigrantPersons } from '../entities/migrantPersons.entity';
 import { Repository, EntityRepository } from 'typeorm';
 import { MigrantPerson, MigrantPersonData } from './../graphql.schema';
-import { Countries } from 'src/entities';
+import { Campus, Countries } from 'src/entities';
 
 @Injectable()
 @EntityRepository(MigrantPersons)
@@ -10,7 +10,7 @@ export class MigrantsPersonRepository extends Repository<MigrantPersons> {
   public async getMigrantsPerson(): Promise<MigrantPerson[]> {
     try {
       return await this.find({
-        relations: ['country'],
+        relations: ['country', 'campus'],
         where: { deletedAt: null },
       });
     } catch (error) {
@@ -21,6 +21,7 @@ export class MigrantsPersonRepository extends Repository<MigrantPersons> {
   public async insertMigrantPerson(
     migrantPersonData: MigrantPersonData,
     country: Countries,
+    campus: Campus
   ): Promise<MigrantPerson> {
     try {
       const {
@@ -82,6 +83,7 @@ export class MigrantsPersonRepository extends Repository<MigrantPersons> {
       migrant.studyValidationProcess = studyValidationProcess;
       migrant.occupationCountryOrigen = occupationCountryOrigen;
       migrant.country = country;
+      migrant.campus = campus;
 
       return await migrant.save();
     } catch (error) {
@@ -164,7 +166,8 @@ export class MigrantsPersonRepository extends Repository<MigrantPersons> {
   public async editMigrant(
     migrant: MigrantPerson,
     migrantData: MigrantPersonData, 
-    country: Countries   
+    country: Countries,
+    campus: Campus   
   ): Promise<MigrantPerson> {
     const {
       name,
@@ -224,6 +227,7 @@ export class MigrantsPersonRepository extends Repository<MigrantPersons> {
     migrant.studyValidationProcess = studyValidationProcess;
     migrant.occupationCountryOrigen = occupationCountryOrigen;
     migrant.country = country;
+    migrant.campus = campus;
 
     return await this.save(migrant);
   }

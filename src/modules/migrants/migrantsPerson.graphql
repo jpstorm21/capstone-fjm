@@ -41,6 +41,7 @@ type MigrantPerson {
   studyValidationProcess: String!
   occupationCountryOrigen: String!
   country: Country!
+  campus: Venue!
   createdAt: Date!
   updatedAt: Date!
   deletedAt: Date!
@@ -75,4 +76,5 @@ input MigrantPersonData {
   studyValidationProcess: String!
   occupationCountryOrigen: String!
   country: String!
+  campus: String!
 }

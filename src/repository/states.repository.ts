@@ -17,16 +17,15 @@ export class StateRepository extends Repository<States> {
     }
   }
 
-  /* public async getFollowMigrantById(id: any): Promise<Follow[]> {
+  public async getStateById(id: string): Promise<State> {
     try {
-      return this.find({
-        relations: ['migrant'],
-        where: { deletedAt: null, migrant: id },
+      return await this.findOne({
+        where: { id: id, deletedAt: null },
       });
     } catch (error) {
       throw error;
     }
-  } */
+  }
 
   public async insertState(
     stateData: StateData,    
