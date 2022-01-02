@@ -54,6 +54,18 @@ export class FollowStateRepository extends Repository<FollowStates> {
       throw error;
     }
   }  
+  public async getFollowStateByIdFollow(idFollow: string): Promise<FollowState[]> {
+    try {
+      if (idFollow ) {
+        return await this.find({
+            relations: ['follow', 'state'],
+          where: { follow: idFollow, deletedAt: null },
+        });
+      }
+    } catch (error) {
+      throw error;
+    }
+  }  
   
 
   public async deleteFollowState(followState: FollowState): Promise<FollowState> {

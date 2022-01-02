@@ -38,6 +38,14 @@ export class FollowStatesService {
       throw error;
     }
   }
+  async getFollowStateByIdFollow(idFollow: string): Promise<FollowState[]> {
+    try {
+      this.logger.debug(`Getting follow state by idFollow = ${idFollow} `);
+      return await this.followStateRepository.getFollowStateByIdFollow(idFollow);
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async createFollowState(
     followStateData: FollowStateData,

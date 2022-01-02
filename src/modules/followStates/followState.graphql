@@ -6,6 +6,7 @@ type Query {
 
 type Mutation {
   getFollowStateById(idFollow: ID, idState: ID): FollowState
+  getFollowStateByIdFollow(idFollow: ID): [FollowState]
   createFollowState(input: FollowStateData): FollowState
   editFollowState(
     idFollow: ID

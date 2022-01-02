@@ -88,6 +88,8 @@ export abstract class IMutation {
 
     abstract getFollowStateById(idFollow?: string, idState?: string): FollowState | Promise<FollowState>;
 
+    abstract getFollowStateByIdFollow(idFollow?: string): FollowState[] | Promise<FollowState[]>;
+
     abstract createFollowState(input?: FollowStateData): FollowState | Promise<FollowState>;
 
     abstract editFollowState(idFollow?: string, idState?: string, input?: FollowStateData): FollowState | Promise<FollowState>;

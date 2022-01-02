@@ -22,6 +22,10 @@ export class FollowStateResolver {
   async getFollowStateById(@Args('idFollow') idFollow: string, @Args('idState') idState: string): Promise<FollowState> {
     return await this.FollowStatesService.getFollowStateById(idFollow,idState);
   }
+  @Mutation('getFollowStateByIdFollow')
+  async getFollowStateByIdFollow(@Args('idFollow') idFollow: string): Promise<FollowState[]> {
+    return await this.FollowStatesService.getFollowStateByIdFollow(idFollow);
+  }
 
   @Mutation('createFollowState')
   async createFollowState(
