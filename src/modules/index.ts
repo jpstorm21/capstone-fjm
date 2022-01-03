@@ -1,4 +1,5 @@
 export { UsersModule } from './users/users.module';
+export { RelativeMigrantsModule } from './relatives/relativesMigrants.module';
 export { FollowStateModule } from './followStates/followState.module';
 export { StatesModule } from './states/states.module';
 export { FollowsModule } from './follows/follows.module';

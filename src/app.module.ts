@@ -27,7 +27,8 @@ import {
   MigrantsPersonsModule,
   FollowsModule,
   StatesModule,
-  FollowStateModule
+  FollowStateModule,
+  RelativeMigrantsModule
 } from './modules';
 
 dotenv.config();
@@ -51,6 +52,7 @@ const {
     FollowsModule,
     StatesModule,
     FollowStateModule,
+    RelativeMigrantsModule,
     GraphQLModule.forRoot({
       typePaths: ['./**/**/*.graphql'],
       installSubscriptionHandlers: true,

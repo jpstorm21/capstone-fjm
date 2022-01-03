@@ -64,6 +64,17 @@ export class MigrantPersonData {
     campus: string;
 }
 
+export class RelativeData {
+    name: string;
+    sex: string;
+    age: number;
+    whatDoes: string;
+    pathologies: string;
+    withYou: string;
+    relationship: string;
+    migrantPerson: string;
+}
+
 export class StateData {
     type: string;
     typeNumber: number;
@@ -108,6 +119,14 @@ export abstract class IMutation {
 
     abstract deleteMigrantPerson(id?: string): MigrantPerson | Promise<MigrantPerson>;
 
+    abstract getRelativeMigrantByMigrants(id?: string): Relative[] | Promise<Relative[]>;
+
+    abstract createRelativeMigrant(input?: RelativeData): Relative | Promise<Relative>;
+
+    abstract editRelativeMigrant(id?: string, input?: RelativeData): Relative | Promise<Relative>;
+
+    abstract deleteRelativeMigrant(id?: string): Relative | Promise<Relative>;
+
     abstract createState(input?: StateData): State | Promise<State>;
 
     abstract getStatesByMigrant(id?: string): State[] | Promise<State[]>;
@@ -145,6 +164,8 @@ export abstract class IQuery {
     abstract getFollows(): Follo[] | Promise<Follo[]>;
 
     abstract getMigrantsPersons(): MigrantPerson[] | Promise<MigrantPerson[]>;
+
+    abstract getRelativeMigrants(): Relative[] | Promise<Relative[]>;
 
     abstract getStates(): State[] | Promise<State[]>;
 
@@ -219,6 +240,21 @@ export class MigrantPerson {
     occupationCountryOrigen: string;
     country: Country;
     campus: Venue;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date;
+}
+
+export class Relative {
+    id: string;
+    name: string;
+    sex: string;
+    age: number;
+    whatDoes: string;
+    pathologies: string;
+    withYou: string;
+    relationship: string;
+    migrantPerson: MigrantPerson;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;
