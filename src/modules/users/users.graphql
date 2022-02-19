@@ -1,8 +1,47 @@
+scalar Date
+
 type Query {
-    getUsers: [User]
+  getUsers: [User]
+  getAdministrative: [Administrative]
+}
+
+type Mutation {
+  createAdminstrative(input: UserData): Administrative
+  editAdminstrative(id: ID, input: UserData): Administrative
+  changeState(id: ID): Administrative
+  deleteAdminstrativer(id: ID): Administrative
+  changePassword(id: ID, password: String): Administrative
 }
 
 type User {
-    id: ID!
-    username: String!
+  id: ID!
+  name: String!
+  run: String!
+  email: String!
+  passwordHash: String!
+  passwordSalt: String!
+  state: Boolean!
+  createdAt: Date!
+  updatedAt: Date!
+  deletedAt: Date!
+}
+
+type Administrative {
+  user: User!
+  campus: Venue!
+  createdAt: Date!
+  updatedAt: Date!
+  deletedAt: Date!
+}
+
+type Admin {
+  user: User!
+}
+
+input UserData {
+  run: String!
+  name: String!
+  email: String!
+  password: String
+  campus: String!
 }

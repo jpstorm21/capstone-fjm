@@ -4,18 +4,55 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 
 // entities
-import { Users } from './entities';
+import {
+  Users,
+  SuperAdmins,
+  Administratives,
+  Campus,
+  Countries,
+  Follow,
+  FollowStates,
+  MigrantPersons,
+  Records,
+  Relatives,
+  States,
+} from './entities';
 
 // Modules
-import { UsersModule } from './modules';
+import {
+  UsersModule,
+  AuthModule,
+  CountriesModule,
+  CampusModule,
+  MigrantsPersonsModule,
+  FollowsModule,
+  StatesModule,
+  FollowStateModule,
+  RelativeMigrantsModule
+} from './modules';
 
 dotenv.config();
 
-const { TYPEORM_HOST, TYPEORM_USERNAME, TYPEORM_PASSWORD, TYPEORM_DATABASE } =  process.env;
+const {
+  TYPEORM_HOST,
+  TYPEORM_USERNAME,
+  TYPEORM_PASSWORD,
+  TYPEORM_DATABASE,
+  TYPEORM_SYNCHRONIZE,
+  TYPEORM_CONNECTION,
+} = process.env;
 
 @Module({
-  imports: [
-    UsersModule,
+  imports: [ 
+  UsersModule,
+    AuthModule,
+    CountriesModule,
+    CampusModule,
+    MigrantsPersonsModule,
+    FollowsModule,
+    StatesModule,
+    FollowStateModule,
+    RelativeMigrantsModule,
     GraphQLModule.forRoot({
       typePaths: ['./**/**/*.graphql'],
       installSubscriptionHandlers: true,
@@ -30,12 +67,24 @@ const { TYPEORM_HOST, TYPEORM_USERNAME, TYPEORM_PASSWORD, TYPEORM_DATABASE } =  
       username: TYPEORM_USERNAME,
       password: TYPEORM_PASSWORD,
       database: TYPEORM_DATABASE,
-      entities: [Users],
-      synchronize: true,
+      entities: [
+        Users,
+        SuperAdmins,
+        Administratives,
+        Campus,
+        Countries,
+        Follow,
+        FollowStates,
+        MigrantPersons,
+        Records,
+        Relatives,
+        States,
+      ],
+      synchronize: TYPEORM_SYNCHRONIZE == 'true' ? true : false,
       retryDelay: 3000,
       retryAttempts: 10,
-      keepConnectionAlive: true
-    })
+      keepConnectionAlive: true,
+    }),
   ],
   controllers: [],
   providers: [],

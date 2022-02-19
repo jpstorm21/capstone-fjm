@@ -1,0 +1,38 @@
+scalar Date
+
+type Query {
+  getRelativeMigrants: [Relative]
+}
+
+type Mutation {
+  getRelativeMigrantByMigrants(id: String): [Relative]
+  createRelativeMigrant(input: RelativeData): Relative
+  editRelativeMigrant(id: ID, input: RelativeData): Relative
+  deleteRelativeMigrant(id: ID): Relative
+}
+
+type Relative {
+  id: ID!
+  name: String!
+  sex: String!
+  age: Int!
+  whatDoes: String!
+  pathologies: String!
+  withYou: String!
+  relationship: String!
+  migrantPerson: MigrantPerson!
+  createdAt: Date!
+  updatedAt: Date!
+  deletedAt: Date!
+}
+
+input RelativeData {
+  name: String!
+  sex: String!
+  age: Int!
+  whatDoes: String!
+  pathologies: String!
+  withYou: String!
+  relationship: String!
+  migrantPerson: String!
+}

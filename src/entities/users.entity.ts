@@ -1,19 +1,47 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  OneToMany,
+} from 'typeorm';
+import { Administratives } from './administratives.entity';
 
 @Entity()
 export class Users extends BaseEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: string
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column({ name: 'username', type: 'text', nullable: true })
-    username: string
+  @Column({ name: 'name', type: 'text', nullable: false })
+  name: string;
 
-    @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: 'NOW' })
-    createdAt: Date
+  @Column({ name: 'run', type: 'text', nullable: false })
+  run: string;
 
-    @UpdateDateColumn({ name: 'update_at', type: 'timestamp' })
-    updatedAt: Date
+  @Column({ name: 'email', type: 'text', nullable: false })
+  email: string;
 
-    @DeleteDateColumn({ name: 'delete_at', type: 'timestamp' })
-    deleteAt: Date
+  @Column({ name: 'state', type: 'boolean', nullable: false })
+  state: boolean;
+
+  @Column({ name: 'password_hash', type: 'text', nullable: false })
+  passwordHash: string;
+
+  @Column({ name: 'password_salt', type: 'text', nullable: false })
+  passwordSalt: string;
+
+  @OneToMany(() => Administratives, (administrative) => administrative.user)
+  administrative: Administratives[];
+
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: 'NOW' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'update_at', type: 'timestamp' })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp' })
+  deletedAt: Date;
 }

@@ -1,0 +1,24 @@
+scalar Date
+
+type Query {
+  getFollows: [Follo]
+}
+
+type Mutation {
+  createFollow(input: FollowData): Follo
+  getFollowsByMigrant(id: String): [Follo]
+}
+
+type Follo {
+  id: ID!
+  type: String!
+  migrant: MigrantPerson!
+  createdAt: Date!
+  updatedAt: Date!
+  deletedAt: Date!
+}
+
+input FollowData {
+  type: String!
+  migrant: String!
+}

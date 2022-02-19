@@ -1,0 +1,23 @@
+union LoginResult = LoginResponseAdministrative | LoginResponseAdmin
+
+type Mutation {
+    login(input: InputLogin): LoginResult
+    refreshToken: LoginResult
+}
+
+input InputLogin {
+    email: String!
+    password: String!
+}
+
+type LoginResponseAdministrative {
+    token: String!
+    administrative: Administrative
+    type: String!
+}
+
+type LoginResponseAdmin {
+    token: String!
+    admin: Admin
+    type: String!
+}
